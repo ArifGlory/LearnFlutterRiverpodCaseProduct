@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../product_detail/product_detail_screen.dart';
 import 'product_list_controller.dart';
 
 class ProductListScreen extends ConsumerWidget {
@@ -25,6 +26,15 @@ class ProductListScreen extends ConsumerWidget {
                 leading: Image.network(p.image, width: 50),
                 title: Text(p.title),
                 subtitle: Text("\$${p.price}"),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => ProductDetailScreen(p.id),
+                    ),
+                  );
+                },
+
               );
             },
           ),
