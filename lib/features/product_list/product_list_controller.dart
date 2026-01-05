@@ -18,14 +18,31 @@ class ProductListController extends Notifier<AsyncValue<List<Product>>> {
       final products = await _repo.getProducts();
       state = AsyncData(products);
     } catch (e) {
-      state = AsyncError(e, StackTrace.current);
+      if (state.hasValue) {
+        // keep showing cached data
+      } else {
+        state = AsyncError(e, StackTrace.current);
+      }
     }
   }
+
 
   Future<void> refresh() async {
     state = const AsyncLoading();
     await _loadProducts();
   }
+
+  Future<void> addProduct(Product product) async {
+    try {
+      final newProduct = await _repo.addProduct(product);
+
+      state = state.whenData((products) => [newProduct, ...products]);
+    } catch (e) {
+      state = AsyncError(e, StackTrace.current);
+    }
+  }
+
+
 }
 
 final productListControllerProvider =

@@ -15,4 +15,10 @@ class ProductRepository {
     final data = await _apiClient.post('/products', product.toJson());
     return Product.fromJson(data);
   }
+
+  Future<Product> getProductById(int id) async {
+    final data = await _apiClient.get('/products/$id');
+    return Product.fromJson(data);
+  }
+
 }
