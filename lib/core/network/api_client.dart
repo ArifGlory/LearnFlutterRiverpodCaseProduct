@@ -6,6 +6,11 @@ import 'api_exception.dart';
 
 class ApiClient {
   final http.Client _client = http.Client();
+  String? token;
+
+  void setToken(String? value) {
+    token = value;
+  }
 
   Future<dynamic> get(String path) async {
     try {
